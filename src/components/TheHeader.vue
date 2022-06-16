@@ -1,5 +1,5 @@
 <template>
-  <header class="container mx-auto py-10">
+  <header class="container mx-auto py-10 pb-0">
     <header class="sub_header">
       <img src="../assets/logo.png" class="w-12" alt="" />
       <div class="socail_media_links">
