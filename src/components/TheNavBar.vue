@@ -5,6 +5,13 @@
       <router-link to="/about" class="link font-semibold"
         >About Me!</router-link
       >
+      <router-link to="/CreatePost" class="link font-semibold"
+        >Create Post</router-link
+      >
+      <router-link to="/Register" class="link font-semibold"
+        >Register</router-link
+      >
+      <router-link to="/Login" class="link font-semibold">Login</router-link>
     </div>
   </div>
 </template>

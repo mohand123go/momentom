@@ -2,15 +2,15 @@
   <header class="container mx-auto py-10 pb-0">
     <header class="sub_header">
       <img src="../assets/logo.png" class="w-12" alt="" />
-      <div class="socail_media_links">
+      <div class="socail_media_links flex gap-5 items-center">
         <a href="https://www.facebook.com/mohhand.mohammadi" target="_blank">
-          <img src="../assets/facebook.png" class="w-12" alt="" />
+          <twitter class="w-6" />
         </a>
         <a href="https://www.facebook.com/mohhand.mohammadi" target="_blank">
-          <img src="../assets/facebook.png" class="w-12" alt="" />
+          <instagram class="icon w-6" />
         </a>
         <a href="https://www.facebook.com/mohhand.mohammadi" target="_blank">
-          <img src="../assets/facebook.png" class="w-12" alt="" />
+          <linkedin class="icon w-6" />
         </a>
       </div>
     </header>
@@ -19,9 +19,15 @@
 </template>
 <script>
 import TheNavBar from "./TheNavBar.vue";
+import twitter from "../assets/Icons/twitter-brands.svg";
+import instagram from "../assets/Icons/instagram-brands.svg";
+import linkedin from "../assets/Icons/linkedin-brands.svg";
 export default {
   components: {
     TheNavBar,
+    twitter,
+    instagram,
+    linkedin,
   },
 };
 </script>

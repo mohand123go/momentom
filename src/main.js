@@ -4,8 +4,10 @@ import router from "./router";
 import store from "./store";
 import "./assets/tailwind.css";
 import "vue-awesome/icons";
+import Vue2Editor from "vue2-editor";
 Vue.config.productionTip = false;
 
+Vue.use(Vue2Editor);
 new Vue({
   router,
   store,

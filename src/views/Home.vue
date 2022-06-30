@@ -14,9 +14,13 @@ export default {
   components: {
     NewFeedsPost,
   },
+  async created() {
+    console.log("home created");
+    await this.$store.dispatch("GET_NEWS_FEEDS");
+  },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .home {
   @apply container mx-auto max-w-screen-xl md:px-12 px-6;
 }

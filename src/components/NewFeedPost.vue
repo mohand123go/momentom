@@ -44,7 +44,7 @@
 export default {
   methods: {
     handleClick() {
-      this.$router.push('/post')
+      this.$router.push("/post");
     },
   },
 };

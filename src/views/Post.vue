@@ -43,8 +43,8 @@
             and spreading over her lap when she sat. She hated huffing and
             puffing up the stairs, and she worried she’d become diabetic. So she
             underwent a radical form of weight loss surgery that eliminated over
-            half of her and taught me a powerful lesson in how intolerable
-            it was to be like me.
+            half of her and taught me a powerful lesson in how intolerable it
+            was to be like me.
           </p>
         </div>
       </div>
@@ -61,12 +61,12 @@ export default {
 };
 </script>
 <style scoped>
-.post__sub-title{
-    @apply text-4xl pb-5;
+.post__sub-title {
+  @apply text-4xl pb-5;
 }
 
-.post__pragraph{
-    @apply text-xl leading-7
+.post__pragraph {
+  @apply text-xl leading-7;
 }
 .post {
   @apply container mx-auto max-w-screen-xl md:px-12 px-6;
