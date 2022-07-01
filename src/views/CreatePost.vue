@@ -2,7 +2,6 @@
   <div class="create-post">
     <BlogCoverPreview v-show="this.$store.state.blogPhotoPreview" />
     <Loading v-show="loading" />
-    <img :src="mohandTest" alt="" />
     <div class="container">
       <div :class="{ invisible: !error }" class="err-message">
         <p><span>Error:</span>{{ this.errorMsg }}</p>
@@ -50,17 +49,18 @@
 import BlogCoverPreview from "../components/BlogCoverPreview";
 import Loading from "../components/Loading";
 import Quill from "quill";
+import axios from "axios";
 window.Quill = Quill;
 const ImageResize = require("quill-image-resize-module").default;
 Quill.register("modules/imageResize", ImageResize);
-function getBase64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
-}
+// function getBase64(file) {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => resolve(reader.result);
+//     reader.onerror = (error) => reject(error);
+//   });
+// }
 export default {
   name: "CreatePost",
   data() {
@@ -69,7 +69,6 @@ export default {
       error: null,
       errorMsg: null,
       loading: null,
-      mohandTest: null,
       editorSettings: {
         modules: {
           imageResize: {},
@@ -82,17 +81,24 @@ export default {
     Loading,
   },
   methods: {
-    fileChange(event) {
-      console.log("fileChange", event.target.files);
-      this.file = this.$refs.blogPhoto.files[0];
-      console.log("file", URL.createObjectURL(event.target.files[0]));
-      // this.$refs.off.src = URL.createObjectURL(event.target.files[0]);
-      this.$store.commit("createFileURL", URL.createObjectURL(this.file));
-      const fileName = this.file.name;
-      // URL.createObjectURL(event.target.files[0])
-      console.log(fileName);
-      // this.$store.commit("fileNameChange", fileName);
-      // this.$store.commit("createFileURL", URL.createObjectURL(this.file));
+    async fileChange(event) {
+      const file = event.target.files[0];
+      const formData = new FormData();
+      formData.append("postImg", file);
+
+      axios({
+        url: "http://localhost:3000/upload",
+        method: "POST",
+        data: formData,
+      })
+        .then(({ data: { path } }) => {
+          const url = `http://localhost:3000/${path}`;
+          this.file = url
+          this.$store.commit("createFileURL", url);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
     openPreview() {
@@ -101,15 +107,46 @@ export default {
     },
 
     async imageHandler(file, Editor, cursorLocation, resetUploader) {
-      const imgBase64 = await getBase64(file)
-      Editor.insertEmbed(cursorLocation, "image", imgBase64);
-      resetUploader();
+      const formData = new FormData();
+      formData.append("postImg", file);
+
+      axios({
+        url: "http://localhost:3000/upload",
+        method: "POST",
+        data: formData,
+      })
+        .then(({ data: { path } }) => {
+          const url = `http://localhost:3000/${path}`;
+          Editor.insertEmbed(cursorLocation, "image", url);
+          resetUploader();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
 
-    uploadBlog() {
-      // if (this.blogTitle.length !== 0 && this.blogHTML.length !== 0) {
-      //   if (this.file) {
-      //     this.loading = true;
+    async uploadBlog() {
+      if (this.blogTitle.length !== 0 && this.blogHTML.length !== 0) {
+        if (this.file) {
+          this.loading = true;
+          const timestamp = Date.now();
+          const payload = {
+            blogHTML: this.blogHTML,
+            blogCoverPhoto: this.file,
+            blogTitle: this.blogTitle,
+            profileId: 1,
+            date: timestamp,
+          };
+
+          try {
+            await this.$store.dispatch("SAVE_POST", payload);
+            this.loading = false;
+          } catch (err) {
+            this.loading = false;
+            console.log(err);
+          }
+        }
+      }
       //     const storageRef = firebase.storage().ref();
       //     const docRef = storageRef.child(
       //       `documents/BlogCoverPhotos/${this.$store.state.blogPhotoName}`
@@ -165,9 +202,9 @@ export default {
     profileId() {
       return this.$store.state.profileId;
     },
-    blogCoverPhotoName() {
-      return this.$store.state.blogPhotoName;
-    },
+    // blogCoverPhotoName() {
+    //   return this.$store.state.blogPhotoName;
+    // },
     blogTitle: {
       get() {
         return this.$store.state.blogTitle;

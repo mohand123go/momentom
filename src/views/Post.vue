@@ -3,12 +3,12 @@
     <header class="post-header">
       <div class="post-header__date">
         Posted On
-        <span class="font-bold">April 15 2019</span>
+        <span class="font-bold">{{ post.date }}</span>
       </div>
       <h2 class="post-header_title">
-        <span class="text-hightled cursor-pointer" @click="handleClick"
-          >Welcome To The Anti-Racism Movement—heres What Youve Missed</span
-        >
+        <span class="text-hightled cursor-pointer" @click="handleClick">
+          {{ post.blogTitle }}
+        </span>
       </h2>
     </header>
     <div class="post-body">
@@ -25,27 +25,9 @@
       </aside>
       <div class="main-content col-span-10 sm:col-span-8">
         <div class="post__image">
-          <img
-            src="../assets/post_image.png"
-            class="w-full rounded-lg"
-            alt=""
-          />
+          <img :src="post.blogCoverPhoto" class="w-full rounded-lg" alt="" />
         </div>
-        <div class="post-details py-5">
-          <h2 class="post__sub-title">
-            Living a life like mine is so intolerable, some undergo serious
-            surgery.
-          </h2>
-          <p class="post__pragraph">
-            The first time it happened, it was my mother. What perfect betrayal,
-            like burning down the house where I was born. She grew tired in
-            secret of the long, curved line of her belly, pendant in sweatpants
-            and spreading over her lap when she sat. She hated huffing and
-            puffing up the stairs, and she worried she’d become diabetic. So she
-            underwent a radical form of weight loss surgery that eliminated over
-            half of her and taught me a powerful lesson in how intolerable it
-            was to be like me.
-          </p>
+        <div class="post-details py-5" v-html="post.blogHTML">
         </div>
       </div>
     </div>
@@ -53,10 +35,21 @@
 </template>
 <script>
 export default {
+  async created() {
+    console.log("hi", this.$route.params.id);
+    const postId = this.$route.params.id;
+    this.post = await this.$store.dispatch("GET_POST_ID", postId);
+    console.log("x", this.post);
+  },
   methods: {
     handleClick() {
       this.$router.push("/post");
     },
+  },
+  data() {
+    return {
+      post: {},
+    };
   },
 };
 </script>

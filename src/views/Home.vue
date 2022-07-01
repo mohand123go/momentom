@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <NewFeedsPost v-for="x in 5" :key="x" />
+    <NewFeedsPost v-for="post in posts" :post="post" :key="post._id" />
   </div>
 </template>
 
@@ -14,9 +14,15 @@ export default {
   components: {
     NewFeedsPost,
   },
+  data() {
+    return {
+      posts: null,
+    };
+  },
   async created() {
     console.log("home created");
-    await this.$store.dispatch("GET_NEWS_FEEDS");
+    this.posts = await this.$store.dispatch("GET_NEWS_FEEDS");
+    console.log("ss", this.posts);
   },
 };
 </script>

@@ -3,12 +3,12 @@
     <header class="post-header">
       <div class="post-header__date">
         Posted On
-        <span class="font-bold">April 15 2019</span>
+        <span class="font-bold">{{ post.date }}</span>
       </div>
       <h2 class="post-header_title">
-        <span class="text-hightled cursor-pointer" @click="handleClick"
-          >Welcome To The Anti-Racism Movement—heres What Youve Missed</span
-        >
+        <span class="text-hightled cursor-pointer" @click="handleClick">{{
+          post.blogTitle
+        }}</span>
       </h2>
     </header>
     <div class="post-body">
@@ -23,11 +23,7 @@
       </aside>
       <div class="main-content col-span-10 sm:col-span-7">
         <div class="post__image">
-          <img
-            src="../assets/post_image.png"
-            class="w-full rounded-lg"
-            alt=""
-          />
+          <img :src="post.blogCoverPhoto" class="w-full rounded-lg" alt="" />
         </div>
         <div class="post-details py-5">
           <p class="font-semibold text-gray-600">
@@ -42,9 +38,15 @@
 </template>
 <script>
 export default {
+  props: {
+    post: {
+      require: true,
+      type: Object,
+    },
+  },
   methods: {
     handleClick() {
-      this.$router.push("/post");
+      this.$router.push(`/post/${this.post._id}`);
     },
   },
 };
