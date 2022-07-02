@@ -289,9 +289,9 @@ export default {
   }
 
   .blog-info {
-    display: flex;
+    @apply  flex flex-col lg:flex-row lg:gap-0 gap-5;
     margin-bottom: 32px;
-
+    
     input:nth-child(1) {
       min-width: 300px;
     }
@@ -309,10 +309,10 @@ export default {
     }
 
     .upload-file {
+       @apply  flex flex-col sm:flex-row sm:gap-0 gap-5;
       flex: 1;
       margin-left: 16px;
       position: relative;
-      display: flex;
 
       input {
         display: none;
@@ -357,7 +357,7 @@ export default {
 
   .blog-actions {
     margin-top: 32px;
-
+ @apply  flex flex-col sm:flex-row sm:gap-0 gap-5;
     button {
       margin-right: 16px;
     }

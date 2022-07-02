@@ -22,8 +22,11 @@
         </div>
       </aside>
       <div class="main-content col-span-10 sm:col-span-7">
-        <div class="post__image">
-          <img :src="post.blogCoverPhoto" class="w-full rounded-lg" alt="" />
+        <div
+          :class="screenWidth > 450 ? 'post__image_lg' : 'post__image_sm'"
+          :style="{ backgroundImage: ` url(${post.blogCoverPhoto})` }"
+        >
+          <!-- <img :src="post.blogCoverPhoto" class="rounded-lg" alt="" /> -->
         </div>
         <div class="post-details py-5">
           <p class="font-semibold text-gray-600">
@@ -38,6 +41,12 @@
 </template>
 <script>
 export default {
+  mounted() {
+    window.addEventListener("resize", this.onResize);
+  },
+  unmounted() {
+    window.removeEventListener("resize", this.onResize);
+  },
   props: {
     post: {
       require: true,
@@ -48,7 +57,16 @@ export default {
     handleClick() {
       this.$router.push(`/post/${this.post._id}`);
     },
+    onResize() {
+      console.log(window.innerWidth)
+      this.screenWidth = window.innerWidth
+    },
   },
+  data(){
+    return{
+      screenWidth: window.innerWidth
+    }
+  }
 };
 </script>
 <style scoped>
@@ -61,6 +79,15 @@ export default {
 .post-header_title {
   @apply font-medium text-4xl;
   font-family: "clavo", serif;
+}
+
+.post__image_sm {
+  height: min(300px, 500px);
+  @apply w-full bg-cover bg-center;
+}
+.post__image_lg {
+  height: min(50vw, 500px);
+  @apply w-full bg-cover bg-center;
 }
 
 .post__author-info__name {
