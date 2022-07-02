@@ -9,6 +9,7 @@ export default new Vuex.Store({
     blogPhotoFileURL: null,
     blogTitle: "",
     blogHTML: "",
+    blogBrief: ""
   },
   mutations: {
     newBlogPost(state, payload) {
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     updateBlogTitle(state, payload) {
       state.blogTitle = payload;
+    },
+    updateBlogBrief(state, payload) {
+      state.blogBrief = payload;
     },
     createFileURL(state, payload) {
       state.blogPhotoFileURL = payload;

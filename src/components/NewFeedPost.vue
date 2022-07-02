@@ -3,7 +3,7 @@
     <header class="post-header">
       <div class="post-header__date">
         Posted On
-        <span class="font-bold">{{ post.date }}</span>
+        <span class="font-bold">{{ post.createdDate }}</span>
       </div>
       <h2 class="post-header_title">
         <span class="text-hightled cursor-pointer" @click="handleClick">{{
@@ -30,8 +30,7 @@
         </div>
         <div class="post-details py-5">
           <p class="font-semibold text-gray-600">
-            A handy list of things that you’re going to need to catch up on.
-            Buck up, because it won’t be easy.
+            {{post.blogBrief}}
           </p>
           <a href="" class="text-sm underline">Read More</a>
         </div>

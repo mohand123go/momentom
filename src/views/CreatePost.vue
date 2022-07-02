@@ -27,6 +27,14 @@
           <span>File Chosen: {{ this.$store.state.blogPhotoName }}</span>
         </div>
       </div>
+      <div>
+        <textarea
+          placeholder="Blog Brief"
+          v-model="blogBrief"
+          cols="30"
+          class="blog-brief"
+        ></textarea>
+      </div>
       <div class="editor">
         <vue-editor
           :editorOptions="editorSettings"
@@ -69,6 +77,7 @@ export default {
       error: null,
       errorMsg: null,
       loading: null,
+
       editorSettings: {
         modules: {
           imageResize: {},
@@ -93,7 +102,7 @@ export default {
       })
         .then(({ data: { path } }) => {
           const url = `http://localhost:3000/${path}`;
-          this.file = url
+          this.file = url;
           this.$store.commit("createFileURL", url);
         })
         .catch((err) => {
@@ -136,7 +145,9 @@ export default {
             blogTitle: this.blogTitle,
             profileId: 1,
             date: timestamp,
+            blogBrief: this.blogBrief
           };
+          console.log(' this.BlogBrief',  this.blogBrief)
 
           try {
             await this.$store.dispatch("SAVE_POST", payload);
@@ -205,6 +216,14 @@ export default {
     // blogCoverPhotoName() {
     //   return this.$store.state.blogPhotoName;
     // },
+    blogBrief: {
+      get() {
+        return this.$store.state.blogBrief;
+      },
+      set(payload) {
+        this.$store.commit("updateBlogBrief", payload);
+      },
+    },
     blogTitle: {
       get() {
         return this.$store.state.blogTitle;
@@ -235,6 +254,9 @@ export default {
     margin-top: 0;
   }
 
+  .blog-brief {
+    @apply w-full p-2 border-gray-200 border-solid border-2 rounded;
+  }
   .router-button {
     text-decoration: none;
     color: #fff;
@@ -289,9 +311,9 @@ export default {
   }
 
   .blog-info {
-    @apply  flex flex-col lg:flex-row lg:gap-0 gap-5;
+    @apply flex flex-col lg:flex-row lg:gap-0 gap-5;
     margin-bottom: 32px;
-    
+
     input:nth-child(1) {
       min-width: 300px;
     }
@@ -309,7 +331,7 @@ export default {
     }
 
     .upload-file {
-       @apply  flex flex-col sm:flex-row sm:gap-0 gap-5;
+      @apply flex flex-col sm:flex-row sm:gap-0 gap-5;
       flex: 1;
       margin-left: 16px;
       position: relative;
@@ -357,7 +379,7 @@ export default {
 
   .blog-actions {
     margin-top: 32px;
- @apply  flex flex-col sm:flex-row sm:gap-0 gap-5;
+    @apply flex flex-col sm:flex-row sm:gap-0 gap-5;
     button {
       margin-right: 16px;
     }

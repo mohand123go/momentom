@@ -1,7 +1,6 @@
 export const NewsFeedsModeling = (payload) => {
   const dateTimeFormat = new Intl.DateTimeFormat("en", {
     dateStyle: "medium",
-    timeStyle: "short",
   });
 
   const posts = payload.map((post) => ({
@@ -13,8 +12,7 @@ export const NewsFeedsModeling = (payload) => {
 
 export const PostModeling = (payload) => {
   const dateTimeFormat = new Intl.DateTimeFormat("en", {
-    dateStyle: "medium",
-    timeStyle: "short",
+    dateStyle: "medium"
   });
 
   return {

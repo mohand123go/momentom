@@ -35,8 +35,7 @@
               </div>
               <div class="post-details py-5">
                 <p class="font-semibold text-gray-600">
-                  A handy list of things that you’re going to need to catch up
-                  on. Buck up, because it won’t be easy.
+                 {{BlogBrief}}
                 </p>
                 <a href="" class="text-sm underline">Read More</a>
               </div>
@@ -71,6 +70,9 @@ export default {
     },
     blogHTML() {
       return this.$store.state.blogHTML;
+    },
+    BlogBrief() {
+      return this.$store.state.blogBrief;
     },
   },
 };
